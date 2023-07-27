@@ -1,0 +1,19 @@
+
+name: ci
+on:
+  push
+  
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: docker-practice/actions-setup-docker@master
+      timeout-minutes: 12
+    - run: |
+        set -x
+        docker version
+        docker run --rm hello-world
+    - name: Setup mongo
+      run: docker run -d -it --name mongo -p 27017:27017 mongo
+    - name: Image Check
+      run: docker ps -a
